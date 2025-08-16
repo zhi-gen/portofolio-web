@@ -1,52 +1,230 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhigen | Web Developer Portfolio</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portofolio Saya</title>
+
+  <!-- Tailwind CSS via CDN + dark mode support -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            poppins: ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom Cursor Style -->
+  <style>
+    body {
+      cursor: none;
+      font-family: 'Poppins', sans-serif;
+    }
+    .cursor-dot, .cursor-outline {
+      position: fixed;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background: #4f46e5;
+      border-radius: 50%;
+      transition: width 0.2s, height 0.2s;
+    }
+    .cursor-outline {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #4f46e5;
+      border-radius: 50%;
+      opacity: 0.7;
+      transition: all 0.2s ease;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-white text-gray-800 dark:bg-gray-900 dark:text-white transition-colors duration-300">
 
-    <header id="home" class="hero">
-        <nav class="navbar">
-            <a href="#" class="nav-logo">Zhigen <span class="nav-tag">Ready to Innovate</span></a>
-            <div class="nav-menu">
-                <i class="fa-solid fa-bars"></i>
-            </div>
-        </nav>
+  <!-- Navbar -->
+  <nav class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-md z-50 shadow-sm">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="#home" class="text-xl font-bold text-indigo-600 dark:text-indigo-400">PortoKu</a>
+      <div class="hidden md:flex space-x-8">
+        <a href="#home" class="hover:text-indigo-600 dark:hover:text-indigo-400">Beranda</a>
+        <a href="#about" class="hover:text-indigo-600 dark:hover:text-indigo-400">Tentang</a>
+        <a href="#portfolio" class="hover:text-indigo-600 dark:hover:text-indigo-400">Portofolio</a>
+        <a href="#contact" class="hover:text-indigo-600 dark:hover:text-indigo-400">Kontak</a>
+      </div>
+      <button id="theme-toggle" class="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-700 focus:outline-none">
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="12" cy="12" r="5" stroke-width="2"/>
+          <line x1="12" y1="1" x2="12" y2="3" stroke-width="2"/>
+          <line x1="12" y1="21" x2="12" y2="23" stroke-width="2"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke-width="2"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke-width="2"/>
+          <line x1="1" y1="12" x2="3" y2="12" stroke-width="2"/>
+          <line x1="21" y1="12" x2="23" y2="12" stroke-width="2"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke-width="2"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke-width="2"/>
+        </svg>
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+      <button id="menu-toggle" class="md:hidden text-gray-700 dark:text-gray-200 focus:outline-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="hidden bg-white dark:bg-gray-900 px-6 py-2 md:hidden">
+      <a href="#home" class="block py-2 hover:text-indigo-600">Beranda</a>
+      <a href="#about" class="block py-2 hover:text-indigo-600">Tentang</a>
+      <a href="#portfolio" class="block py-2 hover:text-indigo-600">Portofolio</a>
+      <a href="#contact" class="block py-2 hover:text-indigo-600">Kontak</a>
+    </div>
+  </nav>
 
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Web Junior Developer</h1>
-                <p class="typing-subtitle">We<span id="typed-text"></span></p>
-                <p class="description">
-                    Creating an Innovative, Functional, and User-Friendly Website for Digital Solutions.
-                </p>
-                <div class="action-buttons">
-                    <a href="#portfolio" class="btn btn-primary">
-                        Proyek <i class="fa-solid fa-up-right-from-square"></i>
-                    </a>
-                    <a href="#contact" class="btn btn-secondary">
-                        Kontak <i class="fa-solid fa-comment-dots"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://i.ibb.co/L0fV1pM/hero-image.png" alt="Developer Isometric Illustration">
-            </div>
+  <!-- Hero Section -->
+  <section id="home" class="min-h-screen flex items-center pt-20 bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800">
+    <div class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-10 md:mb-0">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Halo, saya <span class="text-indigo-600 dark:text-indigo-400">Andi Saputra</span></h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">Frontend Developer & Desainer UI/UX</p>
+        <p class="mb-6">Saya menciptakan pengalaman web yang indah dan fungsional.</p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#portfolio" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg inline-block transition">Lihat Karya Saya</a>
+          <a href="cv-andi-saputra.pdf" download class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 px-6 py-3 rounded-lg inline-block transition flex items-center">
+            <span>📥 Download CV</span>
+          </a>
         </div>
-    </header>
+      </div>
+      <div class="md:w-1/2 flex justify-center">
+        <div class="w-64 h-64 rounded-full overflow-hidden border-4 border-indigo-500 shadow-xl">
+          <img src="https://via.placeholder.com/256" alt="Foto Profil" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    
-    <script src="script.js"></script>
+  <!-- Tentang -->
+  <section id="about" class="py-20 bg-gray-50 dark:bg-gray-800 opacity-0 transform translate-y-10 transition-all duration-1000">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-8 text-center">Tentang Saya</h2>
+      <div class="flex flex-col md:flex-row gap-10 items-center">
+        <div class="md:w-1/3">
+          <img src="https://via.placeholder.com/300" alt="Tentang Saya" class="rounded-lg shadow-lg">
+        </div>
+        <div class="md:w-2/3">
+          <p class="text-lg mb-4">Saya adalah seorang pengembang web dan desainer UI/UX berbasis di Jakarta. Saya memiliki pengalaman lebih dari 4 tahun dalam membuat aplikasi web yang responsif dan menarik.</p>
+          <p class="mb-4">Saya fokus pada teknologi seperti HTML, CSS, JavaScript, Tailwind, dan React. Saya juga suka belajar hal baru dan selalu ingin meningkatkan kualitas karya saya.</p>
+          <div class="mt-6">
+            <h3 class="text-xl font-semibold mb-3">Keterampilan:</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">HTML</span>
+              <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">CSS</span>
+              <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">JavaScript</span>
+              <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">Tailwind</span>
+              <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-3 py-1 rounded-full text-sm">React</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portofolio -->
+  <section id="portfolio" class="py-20 opacity-0 transform translate-y-10 transition-all duration-1000">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-4 text-center">Karya Saya</h2>
+      <p class="text-center text-gray-600 dark:text-gray-300 mb-10">Proyek yang saya kerjakan dengan penuh semangat</p>
+
+      <!-- Filter -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <button class="filter-btn active bg-indigo-600 text-white px-4 py-2 rounded-full" data-filter="all">Semua</button>
+        <button class="filter-btn bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-full" data-filter="web">Website</button>
+        <button class="filter-btn bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-full" data-filter="app">Aplikasi</button>
+        <button class="filter-btn bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-full" data-filter="design">Desain</button>
+      </div>
+
+      <!-- Grid Proyek -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid">
+        <div class="project-item bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-category="web">
+          <img src="https://via.placeholder.com/400x250" alt="Toko Online" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <h3 class="text-xl font-semibold mb-2">Toko Online</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">HTML, CSS, JS</p>
+            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">Lihat →</a>
+          </div>
+        </div>
+        <div class="project-item bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-category="app">
+          <img src="https://via.placeholder.com/400x250" alt="Task App" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <h3 class="text-xl font-semibold mb-2">Task Manager</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">React & Tailwind</p>
+            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">Lihat →</a>
+          </div>
+        </div>
+        <div class="project-item bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2" data-category="design">
+          <img src="https://via.placeholder.com/400x250" alt="UI Design" class="w-full h-48 object-cover">
+          <div class="p-5">
+            <h3 class="text-xl font-semibold mb-2">UI Mobile App</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-4">Figma, Prototyping</p>
+            <a href="#" class="text-indigo-600 dark:text-indigo-400 hover:underline">Lihat →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontak -->
+  <section id="contact" class="py-20 bg-gray-50 dark:bg-gray-800 opacity-0 transform translate-y-10 transition-all duration-1000">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl font-bold mb-8 text-center">Hubungi Saya</h2>
+      <form id="contact-form" class="max-w-lg mx-auto">
+        <div class="mb-4">
+          <label for="name" class="block mb-1 font-medium">Nama</label>
+          <input type="text" id="name" class="w-full p-3 rounded border dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block mb-1 font-medium">Email</label>
+          <input type="email" id="email" class="w-full p-3 rounded border dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required>
+        </div>
+        <div class="mb-4">
+          <label for="message" class="block mb-1 font-medium">Pesan</label>
+          <textarea id="message" rows="5" class="w-full p-3 rounded border dark:bg-gray-700 dark:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition" required></textarea>
+        </div>
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded w-full transition">Kirim Pesan</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-6 text-center text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-900 border-t dark:border-gray-800">
+    <div class="container mx-auto px-6">
+      <p>&copy; 2025 Portofolio Saya. Dibuat dengan ❤️.</p>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" class="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-indigo-700">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
+  <!-- Script -->
+  <script src="script.js"></script>
 </body>
 </html>
